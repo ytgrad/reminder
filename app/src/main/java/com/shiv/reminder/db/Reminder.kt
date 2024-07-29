@@ -2,7 +2,8 @@ package com.shiv.reminder.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Date
+import java.time.LocalDate
+import java.time.LocalTime
 
 @Entity(tableName = "reminders_table")
 data class Reminder(
@@ -10,5 +11,6 @@ data class Reminder(
     val id: Int,
     val title: String,
     val description: String,
-    val date: Date
+    val date: LocalDate,
+    val time: LocalTime
 )
