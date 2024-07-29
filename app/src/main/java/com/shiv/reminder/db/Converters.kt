@@ -1,4 +1,4 @@
-package com.shiv.reminder
+package com.shiv.reminder.db
 
 import androidx.room.TypeConverter
 import java.time.LocalDate

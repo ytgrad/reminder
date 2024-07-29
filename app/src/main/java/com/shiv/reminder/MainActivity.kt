@@ -5,7 +5,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.shiv.reminder.adapters.ReminderAdapter
 import com.shiv.reminder.databinding.ActivityMainBinding
 import com.shiv.reminder.db.Reminder
 import com.shiv.reminder.db.ReminderDatabase
@@ -32,7 +35,10 @@ class MainActivity : AppCompatActivity() {
         val reminderDatabase = ReminderDatabase.getDatabaseInstance(this)
         val reminderDao = reminderDatabase.reminderDao()
         val repository = ReminderRepository(reminderDao)
-        viewModel = ViewModelProvider(this, ReminderViewModelFactory(repository))[ReminderViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ReminderViewModelFactory(repository)
+        )[ReminderViewModel::class.java]
 
         viewModel.addReminders(
             Reminder(
@@ -43,6 +49,36 @@ class MainActivity : AppCompatActivity() {
                 date = LocalDate.now()
             )
         )
+        viewModel.addReminders(
+            Reminder(
+                id = 0,
+                title = "test2",
+                description = "test_desc",
+                time = LocalTime.now(),
+                date = LocalDate.now()
+            )
+        )
+        viewModel.addReminders(
+            Reminder(
+                id = 0,
+                title = "test3",
+                description = "test_desc",
+                time = LocalTime.now(),
+                date = LocalDate.now()
+            )
+        )
+
+        val adapter = ReminderAdapter()
+        binding.apply {
+            rvReminderList.layoutManager = LinearLayoutManager(this@MainActivity)
+            rvReminderList.hasFixedSize()
+            rvReminderList.adapter = adapter
+        }
+        viewModel.getReminders().observe(this, Observer {
+            adapter.submitList(it)
+        })
+
+
 
 
     }
