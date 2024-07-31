@@ -129,27 +129,26 @@
                 android:id="@+id/btn_dialog_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:backgroundTint="@color/gray"
-                android:background="@drawable/cancel_button_background"
+                android:backgroundTint="@color/light_gray"
                 android:layout_gravity="center_vertical"
                 android:paddingHorizontal="24dp"
                 android:paddingTop="6dp"
                 android:paddingBottom="8dp"
                 android:textSize="18sp"
-                android:textColor="@color/even_lighter_gray"
+                android:textColor="@color/almost_white"
                 android:text="@string/cancel"/>
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_dialog_set_reminder"
                 android:layout_width="wrap_content"
                 android:layout_height="52dp"
-                android:backgroundTint="@color/light_gray"
+                android:backgroundTint="@color/even_lighter_gray"
                 android:layout_marginStart="64dp"
                 android:paddingHorizontal="24dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="10dp"
                 android:text="@string/set_reminder"
                 android:textSize="18sp"
-                android:textColor="@color/almost_white" />
+                android:textColor="@color/almost_black" />
         </LinearLayout>
     </LinearLayout>
 

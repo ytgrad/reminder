@@ -40,15 +40,31 @@
         android:layout_height="wrap_content"
         app:backgroundTint="@color/almost_black"
         android:background="@drawable/bg_button"
-        android:text="+ new reminder"
-        android:textSize="24sp"
-        android:paddingVertical="8dp"
+        android:paddingBottom="8dp"
         android:gravity="center"
+        android:textAlignment="gravity"
+        android:text="+ new reminder"
+        android:textSize="16sp"
         android:fontFamily="sans-serif-light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rv_reminderList"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/tv_no_reminders"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="No reminders to show."
+        android:gravity="center"
+        android:textAlignment="gravity"
+        android:textColor="@color/gray"
+        app:layout_constraintTop_toBottomOf="@id/tv_header"
+        app:layout_constraintBottom_toTopOf="@id/btn_newReminder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
 
 

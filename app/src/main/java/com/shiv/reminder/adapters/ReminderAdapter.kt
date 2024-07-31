@@ -22,10 +22,12 @@ class ReminderAdapter: ListAdapter<Reminder, ReminderAdapter.MyViewHolder>(Remin
 
     inner class MyViewHolder(private val view: ItemViewBinding): ViewHolder(view.root){
         fun bind(item: Reminder){
+            val amOrPm = if (item.time.hour > 11) "pm" else "am"
+            val hourToShow = if (item.time.hour > 12) item.time.hour - 12 else item.time.hour
             view.apply {
-                tvTime.text = item.time.toString().slice(0..4)
-                tvDate.text = item.date.toString().slice(5..9)
-                tvYear.text = "2024"
+                tvTime.text = String.format("%02d:%02d %s", hourToShow, item.time.minute, amOrPm)
+                tvDate.text = "${item.date.dayOfMonth} ${item.date.month.toString().slice(0..2).toLowerCase().replaceFirstChar { a -> a.uppercase() }}"
+                tvYear.text = item.date.year.toString()
                 tvTitle.text = item.title
                 tvDesc.text = item.description
             }
