@@ -9,4 +9,5 @@
     <color name="even_lighter_gray">#adb5bd</color>
     <color name="whitish_grey">#dee2e6</color>
     <color name="almost_white">#e9ecef</color>
+    <color name="transparent">#00ffffff</color>
 </resources>

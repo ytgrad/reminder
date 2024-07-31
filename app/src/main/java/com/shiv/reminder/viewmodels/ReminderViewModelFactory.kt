@@ -1,4 +1,4 @@
-package com.shiv.reminder.viewmodel
+package com.shiv.reminder.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
