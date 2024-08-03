@@ -45,6 +45,7 @@
         android:textAlignment="gravity"
         android:text="+ new reminder"
         android:textSize="16sp"
+        android:textColor="@color/almost_white"
         android:fontFamily="sans-serif-light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rv_reminderList"

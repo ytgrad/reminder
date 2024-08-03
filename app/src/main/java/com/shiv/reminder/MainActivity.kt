@@ -1,12 +1,12 @@
 package com.shiv.reminder
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.provider.CalendarContract.Colors
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,8 +15,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.Visibility
 import com.shiv.reminder.adapters.ReminderAdapter
 import com.shiv.reminder.databinding.ActivityMainBinding
 import com.shiv.reminder.databinding.AddReminderDialogBinding
@@ -29,11 +29,12 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Calendar
 import java.util.Locale
-import kotlin.math.min
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ReminderAdapter.RecyclerViewEvent {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ReminderViewModel
+    private lateinit var currentList: List<Reminder>
+    private lateinit var adapter: ReminderAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -52,7 +53,10 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, ReminderViewModelFactory(repository))[ReminderViewModel::class.java]
 
         ////////////////////////////////////  recycler view
-        val adapter = ReminderAdapter()
+
+
+
+        adapter = ReminderAdapter(this)
         binding.apply {
             rvReminderList.layoutManager = LinearLayoutManager(this@MainActivity)
             rvReminderList.hasFixedSize()
@@ -60,12 +64,12 @@ class MainActivity : AppCompatActivity() {
         }
         viewModel.getReminders().observe(this, Observer {
             adapter.submitList(it)
-            if (it.isEmpty()){
-                binding.tvNoReminders.isVisible = true
-            }else{
-                binding.tvNoReminders.isVisible = false
-            }
+            currentList = it
+            binding.tvNoReminders.isVisible = it.isEmpty()
         })
+
+        val swipeHandler = ItemTouchHelper(SwipeDelete(adapter))
+        swipeHandler.attachToRecyclerView(binding.rvReminderList)
 
         binding.btnNewReminder.setOnClickListener {
             showDialog()
@@ -178,6 +182,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onItemClick(position: Int) {
+        AlertDialog.Builder(this)
+            .setTitle("Confirmation")
+            .setMessage("Do you want to delete this reminder ?")
+            .setPositiveButton("Yes"){ dialog, _ ->
+                viewModel.deleteReminder(currentList[position].id)
+                dialog.dismiss()
+            }
+            .setNegativeButton("No"){dialog, _ ->
+                adapter.notifyItemChanged(position)
+                dialog.dismiss()
+            }
+            .show()
     }
 
 }
