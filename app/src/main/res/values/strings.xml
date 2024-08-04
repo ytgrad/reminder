@@ -7,4 +7,5 @@
     <string name="select_a_time">Select a time:</string>
     <string name="cancel">cancel</string>
     <string name="set_reminder">set reminder</string>
+    <string name="edit_reminder">edit reminder</string>
 </resources>

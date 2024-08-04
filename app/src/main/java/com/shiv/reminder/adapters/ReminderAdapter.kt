@@ -3,6 +3,7 @@ package com.shiv.reminder.adapters
 import android.view.DragEvent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
@@ -28,7 +29,11 @@ class ReminderAdapter(private val listener: RecyclerViewEvent): ListAdapter<Remi
         listener.onItemClick(position)
     }
 
-    inner class MyViewHolder(private val view: ItemViewBinding): ViewHolder(view.root){
+    inner class MyViewHolder(private val view: ItemViewBinding): ViewHolder(view.root), View.OnLongClickListener{
+
+        init {
+            view.root.setOnLongClickListener(this)
+        }
 
         fun bind(item: Reminder){
             val amOrPm = if (item.time.hour > 11) "pm" else "am"
@@ -41,6 +46,11 @@ class ReminderAdapter(private val listener: RecyclerViewEvent): ListAdapter<Remi
                 tvDesc.text = item.description
             }
 
+        }
+
+        override fun onLongClick(p0: View?): Boolean {
+            listener.onItemLongClick(adapterPosition)
+            return true
         }
     }
 
@@ -55,5 +65,6 @@ class ReminderAdapter(private val listener: RecyclerViewEvent): ListAdapter<Remi
 
     interface RecyclerViewEvent{
         fun onItemClick(position: Int)
+        fun onItemLongClick(position: Int)
     }
 }
